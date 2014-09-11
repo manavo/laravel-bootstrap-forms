@@ -1,0 +1,23 @@
+{
+    "name": "manavo/bootstrap-forms",
+    "description": "",
+    "authors": [
+        {
+            "name": "Philip Manavopoulos",
+            "email": "manavo@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Manavo\\BootstrapForms\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
