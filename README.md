@@ -1,6 +1,6 @@
 # Laravel Bootstrap Forms
 
-Using @stidges' code for bootstrap forms to create a composer package. You can find the original article here: http://blog.stidges.com/post/easy-bootstrap-forms-in-laravel
+Using [@stidges](https://github.com/stidges)' code for bootstrap forms to create a composer package. You can find the original article here: http://blog.stidges.com/post/easy-bootstrap-forms-in-laravel
 
 ## Install
 
