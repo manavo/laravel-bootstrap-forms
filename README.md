@@ -5,8 +5,10 @@ Using [@stidges](https://github.com/stidges)' code for bootstrap forms to create
 ## Install
 
 ```
-composer require manavo/laravel-bootstrap-forms dev-master
+composer require manavo/laravel-bootstrap-forms ~0.0
 ```
+
+## Configure
 
 ```php
 <?php
