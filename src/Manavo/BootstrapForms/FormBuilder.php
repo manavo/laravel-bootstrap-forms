@@ -19,9 +19,10 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  string  $name
 	 * @param  mixed   $label
 	 * @param  array   $options
+	 * @param  array   $labelOptions
 	 * @return string
 	 */
-	public function openGroup($name, $label = null, $options = array())
+	public function openGroup($name, $label = null, $options = array(), $labelOptions = array())
 	{
 		$options = $this->appendClassToOptions('form-group', $options);
 
@@ -37,7 +38,7 @@ class FormBuilder extends IlluminateFormBuilder {
 
 		// If a label is given, we set it up here. Otherwise, we will just
 		// set it to an empty string.
-		$label = $label ? $this->label($name, $label) : '';
+		$label = $label ? $this->label($name, $label, $labelOptions) : '';
 
 		return '<div'.$this->html->attributes($options).'>'.$label;
 	}
