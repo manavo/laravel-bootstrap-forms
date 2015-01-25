@@ -18,7 +18,11 @@ class BootstrapFormsServiceProvider extends IlluminateHtmlServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('manavo/bootstrap-forms');
+		$laravel = app();
+		if (version_compare($laravel::VERSION, '4.2', '<='))
+		{
+			$this->package('manavo/bootstrap-forms');
+		}
 	}
 
 	/**
