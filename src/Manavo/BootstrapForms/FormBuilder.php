@@ -11,7 +11,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 *
 	 * @var array
 	 */
-	protected $groupStack = array();
+	protected $groupStack = [];
 
 	/**
 	 * Open a new form group.
@@ -22,19 +22,23 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $labelOptions
 	 * @return string
 	 */
-	public function openGroup($name, $label = null, $options = array(), $labelOptions = array())
+	public function openGroup($name, $label = null, $options = [], $labelOptions = [])
 	{
 		$options = $this->appendClassToOptions('form-group', $options);
 
 		// Append the name of the group to the groupStack.
 		$this->groupStack[] = $name;
 
-		if ($this->hasErrors($name))
-		{
-			// If the form element with the given name has any errors,
-			// apply the 'has-error' class to the group.
-			$options = $this->appendClassToOptions('has-error', $options);
-		}
+        // Check to see if error blocks are enabled
+        if ($this->errorBlockEnabled($options))
+        {
+            if ($this->hasErrors($name))
+            {
+                // If the form element with the given name has any errors,
+                // apply the 'has-error' class to the group.
+                $options = $this->appendClassToOptions('has-error', $options);
+            }
+        }
 
 		// If a label is given, we set it up here. Otherwise, we will just
 		// set it to an empty string.
@@ -46,16 +50,21 @@ class FormBuilder extends IlluminateFormBuilder {
 	/**
 	 * Close out the last opened form group.
 	 *
+     * @param bool $helpBlock - determines whether the formatted field errors should be displayed
 	 * @return string
 	 */
-	public function closeGroup()
+	public function closeGroup($helpBlock = TRUE)
 	{
 		// Get the last added name from the groupStack and
 		// remove it from the array.
 		$name = array_pop($this->groupStack);
 
-		// Get the formatted errors for this form group.
-		$errors = $this->getFormattedErrors($name);
+        // Check to see if we are to include the formatted help block
+        if ($helpBlock)
+        {
+            // Get the formatted errors for this form group.
+            $errors = $this->getFormattedErrors($name);
+        }
 
 		// Append the errors to the group and close it out.
 		return $errors.'</div>';
@@ -70,7 +79,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function input($type, $name, $value = null, $options = array())
+	public function input($type, $name, $value = null, $options = [])
 	{
 		// Don't add form-control for some input types (like submit, checkbox, radio)
 		if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset'])) {
@@ -91,7 +100,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function select($name, $list = array(), $selected = null, $options = array())
+	public function select($name, $list = [], $selected = null, $options = [])
 	{
 		$options = $this->appendClassToOptions('form-control', $options);
 
@@ -109,7 +118,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function plainInput($type, $name, $value = null, $options = array())
+	public function plainInput($type, $name, $value = null, $options = [])
 	{
 		return parent::input($type, $name, $value, $options);
 	}
@@ -123,7 +132,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function plainSelect($name, $list = array(), $selected = null, $options = array())
+	public function plainSelect($name, $list = [], $selected = null, $options = [])
 	{
 		return parent::select($name, $list, $selected, $options);
 	}
@@ -157,7 +166,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function checkbox($name, $value = 1, $label = null, $checked = null, $options = array())
+	public function checkbox($name, $value = 1, $label = null, $checked = null, $options = [])
 	{
 		$checkable = parent::checkbox($name, $value, $checked, $options);
 
@@ -174,7 +183,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function radio($name, $value = null, $label = null, $checked = null, $options = array())
+	public function radio($name, $value = null, $label = null, $checked = null, $options = [])
 	{
 		$checkable = parent::radio($name, $value, $checked, $options);
 
@@ -191,7 +200,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function inlineCheckbox($name, $value = 1, $label = null, $checked = null, $options = array())
+	public function inlineCheckbox($name, $value = 1, $label = null, $checked = null, $options = [])
 	{
 		$checkable = parent::checkbox($name, $value, $checked, $options);
 
@@ -208,7 +217,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function inlineRadio($name, $value = null, $label = null, $checked = null, $options = array())
+	public function inlineRadio($name, $value = null, $label = null, $checked = null, $options = [])
 	{
 		$checkable = parent::radio($name, $value, $checked, $options);
 
@@ -223,7 +232,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function textarea($name, $value = null, $options = array())
+	public function textarea($name, $value = null, $options = [])
 	{
 		$options = $this->appendClassToOptions('form-control', $options);
 
@@ -238,7 +247,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return string
 	 */
-	public function plainTextarea($name, $value = null, $options = array())
+	public function plainTextarea($name, $value = null, $options = [])
 	{
 		return parent::textarea($name, $value, $options);
 	}
@@ -250,7 +259,7 @@ class FormBuilder extends IlluminateFormBuilder {
 	 * @param  array   $options
 	 * @return array
 	 */
-	private function appendClassToOptions($class, array $options = array())
+	private function appendClassToOptions($class, array $options = [])
 	{
 		// If a 'class' is already specified, append the 'form-control'
 		// class to it. Otherwise, set the 'class' to 'form-control'.
@@ -334,4 +343,24 @@ class FormBuilder extends IlluminateFormBuilder {
 		return '<div class="'.$type.'-inline">'.$checkable.' '.$label.'</div>';
 	}
 
+    /**
+     * errorBlockEnabled
+     *
+     * @param array $options
+     *
+     * @return bool
+     * @author  Vincent Sposato <Vincent.Sposato@gmail.com>
+     * @version v1.0
+     */
+    private function errorBlockEnabled( $options = [ ] )
+    {
+        // Check to see if errorBlock key exists
+        if ( array_key_exists( "errorBlock", $options ) ) {
+            // Return the value from the array
+            return $options[ "errorBlock" ];
+        }
+
+        // Default to true if it does not exist
+        return TRUE;
+    }
 }
