@@ -57,7 +57,14 @@ class FormBuilder extends IlluminateFormBuilder
         // set it to an empty string.
         $label = $label ? $this->label($name, $label, $labelOptions) : '';
 
-        return '<div' . $this->html->attributes($options) . '>' . $label;
+        $attributes = [];
+        foreach ($options as $key => $value) {
+            if (!in_array($key, ['errorBlock'])) {
+                $attributes[$key] = $value;
+            }
+        }
+
+        return '<div' . $this->html->attributes($attributes) . '>' . $label;
     }
 
     /**
