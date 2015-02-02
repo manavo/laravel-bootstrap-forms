@@ -15,6 +15,13 @@ class FormBuilder extends IlluminateFormBuilder
     protected $groupStack = [];
 
     /**
+     * An array containing the options of the currently open form groups.
+     *
+     * @var array
+     */
+    protected $groupOptions = [];
+
+    /**
      * Open a new form group.
      *
      * @param  string $name
@@ -35,6 +42,8 @@ class FormBuilder extends IlluminateFormBuilder
         // Append the name of the group to the groupStack.
         $this->groupStack[] = $name;
 
+        $this->groupOptions[] = $options;
+
         // Check to see if error blocks are enabled
         if ($this->errorBlockEnabled($options)) {
             if ($this->hasErrors($name)) {
@@ -54,18 +63,20 @@ class FormBuilder extends IlluminateFormBuilder
     /**
      * Close out the last opened form group.
      *
-     * @param bool $helpBlock - determines whether the formatted field errors should be displayed
-     *
      * @return string
      */
-    public function closeGroup($helpBlock = true)
+    public function closeGroup()
     {
         // Get the last added name from the groupStack and
         // remove it from the array.
         $name = array_pop($this->groupStack);
 
+        // Get the last added options to the groupOptions
+        // This way we can check if error blocks were enabled
+        $options = array_pop($this->groupOptions);
+
         // Check to see if we are to include the formatted help block
-        if ($helpBlock) {
+        if ($this->errorBlockEnabled($options)) {
             // Get the formatted errors for this form group.
             $errors = $this->getFormattedErrors($name);
         }
