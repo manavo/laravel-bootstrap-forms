@@ -1,6 +1,6 @@
 {
     "name": "manavo/laravel-bootstrap-forms",
-    "description": "Recude the boilerplate code required to get forms in Laravel to have Bootstrap styling",
+    "description": "Reduce the boilerplate code required to get forms in Laravel to have Bootstrap styling",
     "license": "MIT",
     "authors": [
         {
