@@ -105,7 +105,7 @@ class FormBuilder extends IlluminateFormBuilder
     public function input($type, $name, $value = null, $options = [])
     {
         // Don't add form-control for some input types (like submit, checkbox, radio)
-        if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset'])) {
+        if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset', 'file'])) {
             $options = $this->appendClassToOptions('form-control', $options);
         }
 
