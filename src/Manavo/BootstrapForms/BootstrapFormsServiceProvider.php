@@ -19,7 +19,9 @@ class BootstrapFormsServiceProvider extends IlluminateHtmlServiceProvider
      */
     public function boot()
     {
-        $this->package('manavo/bootstrap-forms');
+        if (version_compare($app::VERSION, '5.0') < 0) {
+            $this->package('manavo/bootstrap-forms');
+        }
     }
 
     /**
