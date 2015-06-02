@@ -207,7 +207,7 @@ class FormBuilder extends IlluminateFormBuilder
     ) {
         $checkable = parent::checkbox($name, $value, $checked, $options);
 
-        return @$options['label'] ?
+        return array_key_exists('label', $options) ?
             $this->wrapCheckable($options['label'], 'checkbox', $checkable) :
             $checkable;
     }
