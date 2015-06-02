@@ -5,7 +5,7 @@ Using [@stidges](https://github.com/stidges)' code for bootstrap forms to create
 ## Install
 
 ```
-composer require manavo/laravel-bootstrap-forms ~0.0
+composer require manavo/laravel-bootstrap-forms ~0.1
 ```
 
 ## Configure
@@ -14,7 +14,9 @@ Make sure you comment out the existing HtmlServiceProvider (Illuminate\Html\Html
 
 ```php
 <?php
-// File: app/config/app.php
+// File (Laravel 4): app/config/app.php
+// OR
+// File (Laravel 5): config/app.php
 
 return array(
     // ...
