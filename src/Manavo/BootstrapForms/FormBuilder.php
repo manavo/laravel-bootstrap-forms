@@ -105,7 +105,7 @@ class FormBuilder extends IlluminateFormBuilder
     public function input($type, $name, $value = null, $options = [])
     {
         // Don't add form-control for some input types (like submit, checkbox, radio)
-        if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset'])) {
+        if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset', 'file'])) {
             $options = $this->appendClassToOptions('form-control', $options);
         }
 
@@ -194,7 +194,6 @@ class FormBuilder extends IlluminateFormBuilder
      *
      * @param  string $name
      * @param  mixed  $value
-     * @param  mixed  $label
      * @param  bool   $checked
      * @param  array  $options
      *
@@ -203,13 +202,14 @@ class FormBuilder extends IlluminateFormBuilder
     public function checkbox(
         $name,
         $value = 1,
-        $label = null,
         $checked = null,
         $options = []
     ) {
         $checkable = parent::checkbox($name, $value, $checked, $options);
 
-        return $this->wrapCheckable($label, 'checkbox', $checkable);
+        return @$options['label'] ?
+            $this->wrapCheckable($options['label'], 'checkbox', $checkable) :
+            $checkable;
     }
 
     /**
