@@ -107,6 +107,8 @@ class FormBuilder extends IlluminateFormBuilder
         // Don't add form-control for some input types (like submit, checkbox, radio)
         if (!in_array($type, ['submit', 'checkbox', 'radio', 'reset', 'file'])) {
             $options = $this->appendClassToOptions('form-control', $options);
+        } else if (in_array($type, ['submit', 'reset'])) {
+            $options = $this->appendClassToOptions('btn', $options);
         }
 
         // Call the parent input method so that Laravel can handle
@@ -310,7 +312,21 @@ class FormBuilder extends IlluminateFormBuilder
     {
         return parent::textarea($name, $value, $options);
     }
-
+    
+	/**
+	 * Create a button element.
+	 *
+	 * @param  string  $value
+	 * @param  array   $options
+	 * @return string
+	 */
+	public function button($value = null, $options = array())
+	{
+		$options = $this->appendClassToOptions('btn', $options);
+		
+		return parent::button($value, $options);
+	}
+	
     /**
      * Append the given class to the given options array.
      *
