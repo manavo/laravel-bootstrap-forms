@@ -2,9 +2,9 @@
 
 namespace Manavo\BootstrapForms;
 
-use Illuminate\Html\FormBuilder as IlluminateFormBuilder;
+use Collective\Html\FormBuilder as CollectiveFormBuilder;
 
-class FormBuilder extends IlluminateFormBuilder
+class FormBuilder extends CollectiveFormBuilder
 {
 
     /**
@@ -64,7 +64,7 @@ class FormBuilder extends IlluminateFormBuilder
             }
         }
 
-        return '<div' . $this->html->attributes($attributes) . '>' . $label;
+        return $this->toHtmlString('<div' . $this->html->attributes($attributes) . '>' . $label);
     }
 
     /**
@@ -89,7 +89,7 @@ class FormBuilder extends IlluminateFormBuilder
         }
 
         // Append the errors to the group and close it out.
-        return $errors . '</div>';
+        return $this->toHtmlString($errors . '</div>');
     }
 
     /**
