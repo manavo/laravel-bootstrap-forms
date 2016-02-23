@@ -1,8 +1,8 @@
 <?php namespace Manavo\BootstrapForms;
 
-use Illuminate\Html\HtmlServiceProvider as IlluminateHtmlServiceProvider;
+use Collective\Html\HtmlServiceProvider as CollectiveHtmlServiceProvider;
 
-class BootstrapFormsServiceProvider extends IlluminateHtmlServiceProvider
+class BootstrapFormsServiceProvider extends CollectiveHtmlServiceProvider
 {
 
     /**
@@ -32,9 +32,9 @@ class BootstrapFormsServiceProvider extends IlluminateHtmlServiceProvider
      */
     public function registerFormBuilder()
     {
-        $this->app->bindShared('form', function ($app) {
+        $this->app->singleton('form', function ($app) {
             $form = new FormBuilder($app['html'], $app['url'],
-                $app['session.store']->getToken());
+                $app['view'], $app['session.store']->getToken());
 
             return $form->setSessionStore($app['session.store']);
         });
